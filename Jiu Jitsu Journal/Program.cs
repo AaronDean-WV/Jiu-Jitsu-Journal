@@ -7,7 +7,8 @@ namespace Jiu_Jitsu_Journal
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
+            builder.Services.AddTransient<IUserProfileRepository, UserProfileRepository>(); 
+            builder.Services.AddTransient<IClassRepository, ClassRepository>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
