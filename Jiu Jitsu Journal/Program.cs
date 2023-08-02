@@ -1,3 +1,4 @@
+using Jiu_Jitsu_Journal.Repositories;
 namespace Jiu_Jitsu_Journal
 {
     public class Program
@@ -21,12 +22,20 @@ namespace Jiu_Jitsu_Journal
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+
+                app.UseCors(options =>
+                {
+                    options.AllowAnyOrigin();
+                    options.AllowAnyMethod();
+                    options.AllowAnyHeader();
+                });
             }
 
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            
+            app.UseStaticFiles();
 
             app.MapControllers();
 
