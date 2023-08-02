@@ -2221,9 +2221,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\adean\\workspace\\csharp\\Jiu Jitsu Journal\\Jiu Jitsu Journal\\Jiu Jitsu Journal.csproj",
-      "projectName": "Jiu Jitsu Journal",
-      "projectPath": "C:\\Users\\adean\\workspace\\csharp\\Jiu Jitsu Journal\\Jiu Jitsu Journal\\Jiu Jitsu Journal.csproj",
+      "projectUniqueName": "C:\\Users\\adean\\workspace\\csharp\\Jiu Jitsu Journal\\Jiu Jitsu Journal\\Jiu-Jitsu-Journal.csproj",
+      "projectName": "Jiu-Jitsu-Journal",
+      "projectPath": "C:\\Users\\adean\\workspace\\csharp\\Jiu Jitsu Journal\\Jiu Jitsu Journal\\Jiu-Jitsu-Journal.csproj",
       "packagesPath": "C:\\Users\\adean\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\adean\\workspace\\csharp\\Jiu Jitsu Journal\\Jiu Jitsu Journal\\obj\\",
       "projectStyle": "PackageReference",
