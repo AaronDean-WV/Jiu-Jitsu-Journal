@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\Jiu-Jitsu-Journal.props" />
+</Project>

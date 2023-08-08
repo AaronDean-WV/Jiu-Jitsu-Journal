@@ -71,7 +71,12 @@ namespace Jiu_Jitsu_Journal.Repositories
                                 StartDate = DbUtils.GetDateTime(reader, "StartDate"),
                                 WeeklyClassGoal = DbUtils.GetInt(reader, "WeeklyClassGoal"),
                                 WeeklyRollGoal = DbUtils.GetInt(reader, "WeeklyRollGoal"),
-                                BeltRank = DbUtils.GetString(reader, "BeltRank"),
+                                BeltRank = new BeltRank()
+                                {
+                                    Id = DbUtils.GetInt(reader, "BeltRankId"),
+                                    Rank = DbUtils.GetString(reader, "BeltRankName"),
+                                    Img = DbUtils.GetString(reader, "BeltRankImgUrl"),
+                                },  
                             };
 
                             userProfiles.Add(userProfile);
@@ -111,7 +116,12 @@ namespace Jiu_Jitsu_Journal.Repositories
                                 StartDate = DbUtils.GetDateTime(reader, "StartDate"),
                                 WeeklyClassGoal = DbUtils.GetInt(reader, "WeeklyClassGoal"),
                                 WeeklyRollGoal = DbUtils.GetInt(reader, "WeeklyRollGoal"),
-                                BeltRank = DbUtils.GetString(reader, "BeltRank"),
+                                BeltRank = new BeltRank()
+                                {
+                                    Id = DbUtils.GetInt(reader, "BeltRankId"),
+                                    Rank = DbUtils.GetString(reader, "BeltRankName"),
+                                    Img = DbUtils.GetString(reader, "BeltRankImgUrl"),
+                                },
                             };
                         }
                     }

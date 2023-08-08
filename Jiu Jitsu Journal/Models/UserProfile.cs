@@ -8,8 +8,11 @@ namespace Jiu_Jitsu_Journal.Models
         public DateTime StartDate { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
-        public string BeltRank { get; set; }
         public int WeeklyClassGoal { get; set; }
         public int WeeklyRollGoal { get; set; }
+
+        public BeltRank BeltRank { get; set; }
+        public int BeltRankId { get; set; }
+
     }
 }

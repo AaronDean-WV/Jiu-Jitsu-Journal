@@ -1,4 +1,9 @@
 using Jiu_Jitsu_Journal.Repositories;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
 namespace Jiu_Jitsu_Journal
 {
     public class Program
@@ -7,8 +12,12 @@ namespace Jiu_Jitsu_Journal
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Configuration setup
+            IConfiguration configuration = builder.Configuration;
+
             // Add services to the container.
-            builder.Services.AddTransient<IUserProfileRepository, UserProfileRepository>(); 
+            builder.Services.AddSingleton(configuration); // Add the IConfiguration object
+            builder.Services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             builder.Services.AddTransient<IClassRepository, ClassRepository>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -34,7 +43,7 @@ namespace Jiu_Jitsu_Journal
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-            
+
             app.UseStaticFiles();
 
             app.MapControllers();

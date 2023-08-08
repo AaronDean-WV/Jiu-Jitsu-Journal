@@ -9,10 +9,12 @@ namespace Jiu_Jitsu_Journal.Controllers
     public class UserProfileController : ControllerBase
     {
         private readonly IUserProfileRepository _userProfileRepository;
+        private readonly IBeltRankRepository _beltRankRepository;
 
-        public UserProfileController(IUserProfileRepository userProfileRepository)
+        public UserProfileController(IUserProfileRepository userProfileRepository, IBeltRankRepository beltRankRepository)
         {
             _userProfileRepository = userProfileRepository;
+            _beltRankRepository = beltRankRepository;
         }
 
         // GET: api/UserProfile

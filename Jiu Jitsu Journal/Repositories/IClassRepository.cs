@@ -7,6 +7,6 @@ namespace Jiu_Jitsu_Journal.Repositories
     {
         List<Class> GetAll();
         void Add(Class Class);
-        List<Class> GetClassesForUserInRange(int userProfileId, DateTime startDate, DateTime endDate);
+     
     }
 }

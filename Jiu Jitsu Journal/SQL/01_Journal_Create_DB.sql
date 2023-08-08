@@ -1,6 +1,6 @@
-=USE [master]
+USE [master]
 
-IF db_id('Tabloid') IS NULl
+IF db_id('Journal') IS NULl
   CREATE DATABASE [Journal]
 GO
 
@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS [UserProfile];
 DROP TABLE IF EXISTS [BeltRank];
 GO
 
-CREATE TABLE [USerProfile] (
+CREATE TABLE [UserProfile] (
   [Id] integer PRIMARY KEY IDENTITY,
   [FullName] nvarchar(20) NOT NULL,
   [Email] nvarchar(50) NOT NULL,
@@ -27,16 +27,14 @@ CREATE TABLE [USerProfile] (
 CREATE TABLE [BeltRank] (
   [Id] integer PRIMARY KEY IDENTITY,
   [Color] nvarchar(20) NOT NULL,
-  [img] varbinary(max) NOT NULL
+  [img] nvarchar(1000) NOT NULL
 )
 
 CREATE TABLE [Class] (
   [Id] integer PRIMARY KEY IDENTITY,
   [Date] date NOT NULL,
-  [Time] time NOT NULL,
-  [Duration] integer NOT NULL,
   [Notes] nvarchar(1000) NOT NULL,
-  [UserId] integer NOT NULL,
+  [UserProfileId] integer NOT NULL,
   [TypeOfClass] nvarchar(20) NOT NULL
 )
 
