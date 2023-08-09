@@ -3,6 +3,7 @@ import ClassList from "./ClassList";
 import { ClassForm } from "./ClassForm";
 import { UserProfile } from "./UserProfile";
 import MonthlyReport from "./MonthlyReport";
+import { UserProfileEdit } from "./EditUserProfile";
 
 
 const ApplicationViews = () => {
@@ -13,8 +14,8 @@ return (
         <Route path="/" element= {<ClassList />} />
         <Route path="/classes/add" element={<ClassForm />} />
         <Route path="/users/:id" element={<UserProfile />} />
-        <Route path="/users/:id/edit" element={<UserProfile />} />
-        <Route path="/monthlyReport/:id" element={<MonthlyReport />} />
+        <Route path="/users/:id/edit" element={<UserProfileEdit />} />
+        <Route path="/report/:id" element={<MonthlyReport />} />
         <Route path="*" element={<p>Whoops, nothing here...</p>} />
      
      </Routes>
