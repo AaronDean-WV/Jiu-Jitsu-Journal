@@ -67,3 +67,5 @@ C:\Users\adean\workspace\csharp\Jiu Jitsu Journal\Jiu Jitsu Journal\obj\Debug\ne
 C:\Users\adean\workspace\csharp\Jiu Jitsu Journal\Jiu Jitsu Journal\obj\Debug\net6.0\Jiu-Jitsu-Journal.pdb
 C:\Users\adean\workspace\csharp\Jiu Jitsu Journal\Jiu Jitsu Journal\obj\Debug\net6.0\Jiu-Jitsu-Journal.genruntimeconfig.cache
 C:\Users\adean\workspace\csharp\Jiu Jitsu Journal\Jiu Jitsu Journal\obj\Debug\net6.0\ref\Jiu-Jitsu-Journal.dll
+C:\Users\adean\workspace\csharp\Jiu Jitsu Journal\Jiu Jitsu Journal\bin\Debug\net6.0\Client\package-lock.json
+C:\Users\adean\workspace\csharp\Jiu Jitsu Journal\Jiu Jitsu Journal\bin\Debug\net6.0\Client\package.json

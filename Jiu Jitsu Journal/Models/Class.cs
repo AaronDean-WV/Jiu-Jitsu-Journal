@@ -11,5 +11,7 @@ namespace Jiu_Jitsu_Journal.Models
         public UserProfile UserProfile { get; set; }
         public int UserProfileId { get; set; }
 
+        public int RollCount { get; set; }
+
     }
 }

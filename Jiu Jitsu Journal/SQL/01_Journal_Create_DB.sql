@@ -35,7 +35,8 @@ CREATE TABLE [Class] (
   [Date] date NOT NULL,
   [Notes] nvarchar(1000) NOT NULL,
   [UserProfileId] integer NOT NULL,
-  [TypeOfClass] nvarchar(20) NOT NULL
+  [TypeOfClass] nvarchar(20) NOT NULL,
+  [RollCount] integer NOT NULL,
 )
 
 CREATE TABLE [WeeklyReport] (

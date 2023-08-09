@@ -11,7 +11,7 @@ insert into [BeltRank] ([Id], [Color], [img]) values (5, 'Black','https://bjiuji
 
 
 set identity_insert [Class] on
-insert into [Class] ([Id], [Date], [Notes], [UserProfileId], [TypeOfClass]) values (1, '2020-01-01',  'notes', 1, 'Gi')
+insert into [Class] ([Id], [Date], [Notes], [RollCount], [UserProfileId], [TypeOfClass]) values (1, '2020-01-01',  'notes', 1, 1, 'Gi')
  
 
 

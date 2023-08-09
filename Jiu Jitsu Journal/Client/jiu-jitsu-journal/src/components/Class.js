@@ -1,20 +1,33 @@
 import React from "react";
-import { Card, CardImg, CardBody } from "reactstrap";
+import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
-
 
 export const Class = ({ bjjClass }) => {
   return (
     <Card className="m-4">
-      <p className="text-left px-2">Posted by: {bjjClass.userProfile.fullName}</p>
-      {/* <CardImg top src={bjjClass.imageUrl} alt={bjjClass.title} /> */}
       <CardBody>
         <p>
+          <strong>Date: </strong>
           <Link to={`/class/${bjjClass.id}`}>
-          <strong>{bjjClass.date}</strong>
+            {new Date(bjjClass.date).toLocaleDateString()}
           </Link>
         </p>
-        <p>{bjjClass.note}</p>
+        <p>
+          <strong>Notes: </strong>
+          {bjjClass.notes}
+        </p>
+        <p>
+          <strong>Type of Class: </strong>
+          {bjjClass.typeOfClass}
+        </p>
+        <p>
+          <strong>Posted by: </strong>
+          {bjjClass.userProfile.fullName}
+        </p>
+        <p>
+          <strong>Roll Count: </strong>
+          {bjjClass.rollCount}
+        </p>
       </CardBody>
     </Card>
   );

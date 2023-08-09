@@ -15,7 +15,7 @@ namespace Jiu_Jitsu_Journal.Repositories
             conn.Open();
             using var cmd = conn.CreateCommand();
             cmd.CommandText = @"
-                SELECT c.Id, c.Notes, c.TypeOfClass, c.Date, c.UserProfileId, 
+                SELECT c.Id, c.Notes, c.TypeOfClass, c.Date, c.rollCount, c.UserProfileId, 
                     u.FullName AS FullName
                 FROM Class c
                 JOIN UserProfile u ON c.UserProfileId = u.Id
@@ -31,6 +31,7 @@ namespace Jiu_Jitsu_Journal.Repositories
                     Notes = reader.GetString(reader.GetOrdinal("Notes")),
                     TypeOfClass = reader.GetString(reader.GetOrdinal("TypeOfClass")),
                     Date = reader.GetDateTime(reader.GetOrdinal("Date")),
+                    RollCount = reader.GetInt32(reader.GetOrdinal("RollCount")),
                     UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
                     UserProfile = new UserProfile()
                     {
@@ -49,12 +50,13 @@ namespace Jiu_Jitsu_Journal.Repositories
             conn.Open();
             using var cmd = conn.CreateCommand();
             cmd.CommandText = @"
-                INSERT INTO Class (Notes, TypeOfClass, Date, UserProfileId)
-                VALUES (@notes, @typeOfClass, @date, @userProfileId);
+                INSERT INTO Class (Notes, TypeOfClass, Date, RollCount, UserProfileId)
+                VALUES (@notes, @typeOfClass, @date, @rollCount, @userProfileId);
             ";
             cmd.Parameters.AddWithValue("@notes", classInstance.Notes);
             cmd.Parameters.AddWithValue("@typeOfClass", classInstance.TypeOfClass);
             cmd.Parameters.AddWithValue("@date", classInstance.Date);
+            cmd.Parameters.AddWithValue("@rollCount", classInstance.RollCount);
             cmd.Parameters.AddWithValue("@userProfileId", classInstance.UserProfileId);
 
             cmd.ExecuteNonQuery();

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState, createContext } from "react";
 
 const baseUrl = '/api/class';
 
-export const getAllClassess = () => {
+export const ClassContext = createContext();
+
+export const getAllClasses = () => {
   return fetch(baseUrl) 
     .then((res) => res.json())
 };
