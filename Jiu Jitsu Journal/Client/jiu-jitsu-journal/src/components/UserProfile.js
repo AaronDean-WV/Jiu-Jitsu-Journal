@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody } from "reactstrap";
-import { getUserProfileById } from "../APIManagers/UserProfileManager";
+import { deleteProfile, getUserProfileById } from "../APIManagers/UserProfileManager";
 
 
 export const UserProfile = () => {
+  const localJournalUser = localStorage.getItem("userProfile")
+  const user = JSON.parse(localJournalUser)
+  const navigate = useNavigate();
   const [userProfile, setUserProfile] = useState(null);
   const { id } = useParams();
 
@@ -12,11 +15,21 @@ export const UserProfile = () => {
     getUserProfileById(id).then(setUserProfile);
   }, [id]);
 
-  if (!userProfile) {
+   const handleDeleteButtonClick = (e) => {
+    e.preventDefault();
+    const confirmDelete = window.confirm("Are you sure you want to delete your profile?");
+    if (confirmDelete === true) {
+      deleteProfile(id)
+      .then(() => {
+        navigate("/login");
+      });
+    }
+  };
+
+
+  if (!user) {
     return <div>Loading...</div>;
   }
-  const beltRankColor = userProfile?.beltRank?.color;
-  const beltRankImg = userProfile?.beltRank?.img;
 
   return (
     <Card className="m-4 text-center">
@@ -26,26 +39,17 @@ export const UserProfile = () => {
               <h5>{userProfile?.fullName}</h5>
           </strong>
           <div>
-            <strong>Belt Rank:</strong> {beltRankColor}
-          </div>
-          <div>
-          <img
-  src={beltRankImg} 
-  alt={beltRankColor}
-  width="150" 
-  height="100" 
-/>
-
-          </div>
-          <div>
             <strong>Weekly Class Goal:</strong> {userProfile?.weeklyClassGoal}
           </div>
           <div>
             <strong>Weekly Roll Goal:</strong> {userProfile?.weeklyRollGoal}
           </div>
         </div>
-        <Button tag={Link} to="/users/:id/edit" className="btn btn-primary">
+        <Button  className="btn btn-primary" onClick={() => navigate(`/userprofile/edit/${user?.id}`)}>
         Edit Profile
+      </Button>
+      <Button onClick={handleDeleteButtonClick} className="btn btn-primary">
+        Delete Profile
       </Button>
       </CardBody>
     </Card>

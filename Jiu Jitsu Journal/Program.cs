@@ -18,7 +18,7 @@ namespace Jiu_Jitsu_Journal
             // Add services to the container.
             builder.Services.AddSingleton(configuration); // Add the IConfiguration object
             builder.Services.AddTransient<IUserProfileRepository, UserProfileRepository>();
-            builder.Services.AddTransient<IClassRepository, ClassRepository>();
+            builder.Services.AddTransient<IBjjClassRepository, BjjClassRepository>();
             builder.Services.AddTransient<IBeltRankRepository, BeltRankRepository>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

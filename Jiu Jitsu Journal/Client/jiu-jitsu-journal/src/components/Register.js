@@ -12,16 +12,16 @@ export default function Register({ setIsLoggedIn }) {
   const [email, setEmail] = useState( "");
   const [weeklyClassGoal, setWeeklyClassGoal] = useState(0);
   const [weeklyRollGoal, setWeeklyRollGoal] = useState(0);
-  const [beltRank, setBeltRank] = useState(); // Set default to "White"
+  // const [beltRank, setBeltRank] = useState(); // Set default to "White"
 
   //setting up a map to convert the belt rank to the id in the database
-  const beltRankIdMap = {
-    White: 1,
-    Blue: 2,
-    Purple: 3,
-    Brown: 4,
-    Black: 5
-  };
+  // const beltRankIdMap = {
+  //   White: 1,
+  //   Blue: 2,
+  //   Purple: 3,
+  //   Brown: 4,
+  //   Black: 5
+  // };
 
   const handleWeeklyClassGoalChange = (e) => {
     const newValue = parseInt(e.target.value);
@@ -37,10 +37,10 @@ export default function Register({ setIsLoggedIn }) {
     }
   };
 
-  const handleBeltRankChange = (e) => {
-    const selectedBeltRank = e.target.value;
-    setBeltRank(selectedBeltRank);
-  };
+  // const handleBeltRankChange = (e) => {
+  //   const selectedBeltRank = e.target.value;
+  //   setBeltRank(selectedBeltRank);
+  // };
 
   const registerClick = (e) => {
     e.preventDefault();
@@ -50,13 +50,13 @@ export default function Register({ setIsLoggedIn }) {
       email,
       weeklyClassGoal,
       weeklyRollGoal,
-      beltRankId: beltRankIdMap[beltRank] || 1 // Default to 1 if not found
+      // beltRankId: beltRankIdMap[beltRank] || 1 // Default to 1 if not found
     };
 
     register(userProfile)
     .then(() => {
       setIsLoggedIn(true);
-      localStorage.setItem("userProfile", JSON.stringify(userProfile)); // Set user profile data
+
       navigate('/');
     });
   
@@ -101,7 +101,7 @@ export default function Register({ setIsLoggedIn }) {
             value={weeklyRollGoal}
           />
         </FormGroup>
-        <FormGroup>
+        {/* <FormGroup>
           <Label htmlFor="beltRank">Belt Rank</Label>
           <select
             id="beltRank"
@@ -114,7 +114,7 @@ export default function Register({ setIsLoggedIn }) {
             <option value="Brown">Brown</option>
             <option value="Black">Black</option>
           </select>
-        </FormGroup>
+        </FormGroup> */}
         <FormGroup>
           <Button>Register</Button>
         </FormGroup>

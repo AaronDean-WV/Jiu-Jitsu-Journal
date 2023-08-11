@@ -465,27 +465,50 @@ import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { getUserProfileById, editUserProfile } from "../APIManagers/UserProfileManager";
 
 export const UserProfileEdit = () => {
-  const [editedUserProfile, setEditedUserProfile] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const [editedUserProfile, setEditedUserProfile] = useState({
+    fullName: "",
+    email: "",
+    weeklyClassGoal: 0,
+    weeklyRollGoal: 0,
+  });
+
   useEffect(() => {
-    getUserProfileById(id).then(setEditedUserProfile);
+    getUserProfileById(id).then((userProfile) => {
+      setEditedUserProfile(userProfile);
+    });
   }, [id]);
+
   const handleInputChange = (event) => {
-    // create new copy of the editedUserProfile with the updated value from the input
-    const newProfile = { ...editedUserProfile };
-    newProfile[event.target.id] = event.target.value;
-    // update the state with the new user data
-    setEditedUserProfile(newProfile);
+    if (!editedUserProfile) return; // Check if profile is available
+    const { id, value } = event.target;
+    setEditedUserProfile((prevProfile) => ({
+      ...prevProfile,
+      [id]: value,
+    }));
   };
-  const handleSave = () => {
-    editUserProfile(editedUserProfile).then(() =>
-      navigate(`/users/${editedUserProfile.id}`)
+
+  const handleSave = (e) => {
+    e.preventDefault();
+    
+    const userProfileToEdit = {
+      Id: editedUserProfile.id,
+      FullName: editedUserProfile.fullName,
+      Email: editedUserProfile.email,
+      WeeklyClassGoal: +editedUserProfile.weeklyClassGoal,
+      WeeklyRollGoal: +editedUserProfile.weeklyRollGoal,
+    };
+    console.log("editedUserProfile", userProfileToEdit)
+
+    if (!editedUserProfile) return; // Check if profile is available
+    editUserProfile(userProfileToEdit).then(() =>
+      navigate(`/userprofile/${editedUserProfile.id}`)
     );
   };
-  if (!editedUserProfile) {
-    return <div>Loading...</div>;
-  }
+  
+
   return (
     <Form>
       <FormGroup>
@@ -507,9 +530,9 @@ export const UserProfileEdit = () => {
         />
       </FormGroup>
       <FormGroup>
-        <Label for="weeklyGlassGoal">Weekly Class Goal</Label>
+        <Label for="weeklyClassGoal">Weekly Class Goal</Label>
         <Input
-          type="text"
+          type="number"
           id="weeklyClassGoal"
           onChange={handleInputChange}
           value={editedUserProfile.weeklyClassGoal}
@@ -518,14 +541,12 @@ export const UserProfileEdit = () => {
       <FormGroup>
         <Label for="weeklyRollGoal">Weekly Roll Goal</Label>
         <Input
-          type="text"
+          type="number"
           id="weeklyRollGoal"
           onChange={handleInputChange}
           value={editedUserProfile.weeklyRollGoal}
         />
       </FormGroup>
-      
-      
       <Button onClick={handleSave}>Save</Button>
     </Form>
   );
