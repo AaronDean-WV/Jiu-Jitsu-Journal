@@ -28,23 +28,21 @@ export const ClassForm = () => {
 
 
     const [newClass, updateClass] = useState({
-        Id: classId,
-        UserProfileId: journalUserObject.id,
-        Notes: "",
-        TypeOfClass: "",
+        UserProfileId: 1,
         Date: correctedDate.toISOString(),
-        RollCount: 0
+        Notes: "",
+        RollCount: 0,
+        TypeOfClass: ""
     })
 
     const submit = (e) => {
         e.preventDefault()
         updateClass({
-            Id: classId,
-            UserProfileId: journalUserObject.id,
-            Notes: notes,
-            TypeOfClass: typeOfClass,
+            
             Date: correctedDate.toISOString(),
-            RollCount: rollsCompleted
+            Notes: notes,
+            RollCount: rollsCompleted,
+            TypeOfClass: typeOfClass
         })
     }
 
@@ -52,19 +50,18 @@ export const ClassForm = () => {
         e.preventDefault()
 
         const classToSendToAPI = {
-            Id: classId,
-            UserProfileId: journalUserObject.id,
-            Notes: newClass.notes,
-            TypeOfClass: newClass.typeOfClass,
+            UserProfileId: 1,
             Date: correctedDate.toISOString(),
-            RollCount: newClass.rollCount
+            Notes: newClass.Notes,
+            RollCount: newClass.RollCount,
+            TypeOfClass: newClass.TypeOfClass
         }
 
-        console.log(classId)
+        console.log("classToSendToAPI", classToSendToAPI)
         addClass(classToSendToAPI)
-        .then(() => {
+        .then((classId) => {
             if (classId) {
-                navigate(`/class/${classId}`);
+                navigate("/");
             }
         });
     };
@@ -79,8 +76,12 @@ export const ClassForm = () => {
                 <Label for="typeOfClass">What type of class was it?</Label>
                 <select
                   id="typeOfClass"
-                  value={typeOfClass}
-                  onChange={(e) => setTypeOfClass(e.target.value)}
+                  value={newClass.TypeOfClass}
+                  onChange={(e) =>{
+                    const copy = { ...newClass }
+                    copy.TypeOfClass = e.target.value
+                    updateClass(copy)
+                }}
                 >
                   <option value="">Select type of class</option>
                   <option value="Gi">Gi</option>
@@ -100,8 +101,12 @@ export const ClassForm = () => {
                 <Label for="rollsCompleted">Number of Rolls Completed</Label>
                 <select
                   id="rollsCompleted"
-                  value={rollsCompleted}
-                  onChange={(e) => setRollsCompleted(e.target.value)}
+                  value={newClass.RollCount}
+                  onChange={(e) =>{
+                    const copy = { ...newClass }
+                    copy.RollCount = e.target.value
+                    updateClass(copy)
+                }}
                 >
                   <option value="">Select rolls completed</option>
                   {Array.from({ length: 15 }, (_, index) => (
@@ -113,10 +118,14 @@ export const ClassForm = () => {
               </FormGroup>
               <FormGroup>
                 <Label for="notes">Notes about class.</Label>
-                <Input id="notes" onChange={(e) => setNotes(e.target.value)} />
+                <Input id="notes" onChange={(e) =>{
+                    const copy = { ...newClass }
+                    copy.Notes = e.target.value
+                    updateClass(copy)
+                }} />
               </FormGroup>
             </Form>
-            <Button color="info" onClick={submit}>
+            <Button color="info" onClick={handleSaveButtonClick}>
               SUBMIT
             </Button>
           </CardBody>

@@ -14,6 +14,8 @@ import {
 export default function Header({ isLoggedIn, setIsLoggedIn }) {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const localJournalUser = localStorage.getItem("userProfile")
+  const user = JSON.parse(localJournalUser)
 
   return (
     <div>
@@ -26,18 +28,18 @@ export default function Header({ isLoggedIn, setIsLoggedIn }) {
           <Nav className="mr-auto" navbar>
             {isLoggedIn && (
               <NavItem>
-                <NavLink tag={RRNavLink} to="/users/:id">
+                <NavLink tag={RRNavLink} to={`/userprofile/${user?.id}`}>
                   Profile
                 </NavLink>
               </NavItem>
             )}
             <NavItem>
-              <NavLink tag={RRNavLink} to="/">
+              <NavLink tag={RRNavLink} to="/classlist">
                 Class List
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={RRNavLink} to="/report">
+              <NavLink tag={RRNavLink} to={`/`}>
                 Reports
               </NavLink>
             </NavItem>

@@ -9,27 +9,27 @@ namespace Jiu_Jitsu_Journal.Controllers
     [ApiController]
     public class ClassController : ControllerBase
     {
-        private readonly IClassRepository _classRepository;
+        private readonly IBjjClassRepository _bjjClassRepository;
         //private readonly WeeklyReportGenerator _weeklyReportGenerator; 
 
-        public ClassController(IClassRepository classRepository)
+        public ClassController(IBjjClassRepository bjjClassRepository)
         {
-            _classRepository = classRepository;
+            _bjjClassRepository = bjjClassRepository;
             //_weeklyReportGenerator = weeklyReportGenerator;
         }
 
         [HttpGet]
         public IActionResult GetAllClasses()
         {
-            var classes = _classRepository.GetAll();
-            return Ok(classes);
+            var bjjClasses = _bjjClassRepository.GetAll();
+            return Ok(bjjClasses);
         }
 
         [HttpPost]
-        public IActionResult AddClass([FromBody] Class classInstance)
+        public IActionResult AddClass([FromBody] BjjClass bjjClassInstance)
         {
             
-            _classRepository.Add(classInstance);
+            _bjjClassRepository.Add(bjjClassInstance);
             return Ok();
         }
 

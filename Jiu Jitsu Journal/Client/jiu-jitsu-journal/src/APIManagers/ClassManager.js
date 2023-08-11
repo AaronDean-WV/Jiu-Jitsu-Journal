@@ -1,4 +1,4 @@
-const baseUrl = '/api/class';
+const baseUrl = 'https://localhost:5001/api/Class';
 
 export const getAllClasses = () => {
   return fetch(baseUrl) 

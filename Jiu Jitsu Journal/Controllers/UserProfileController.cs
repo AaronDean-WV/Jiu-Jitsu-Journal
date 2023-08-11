@@ -37,6 +37,18 @@ namespace Jiu_Jitsu_Journal.Controllers
             return Ok(userProfile);
         }
 
+        //GET: api/UserProfile/5/email
+        [HttpGet("GetByEmail/{email}")]
+        public IActionResult GetByEmail(string email)
+        {
+            var userProfile = _userProfileRepository.GetByEmail(email);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+            return Ok(userProfile);
+        }
+
         // POST: api/UserProfile
         [HttpPost]
         public IActionResult Add(UserProfile userProfile)
@@ -46,7 +58,7 @@ namespace Jiu_Jitsu_Journal.Controllers
         }
 
         // PUT: api/UserProfile/5
-        [HttpPut("{id}")]
+        [HttpPut("edit/{id}")]
         public IActionResult Update(int id, UserProfile userProfile)
         {
             var existingUserProfile = _userProfileRepository.GetById(id);

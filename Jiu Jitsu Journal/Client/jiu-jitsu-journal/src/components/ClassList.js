@@ -25,6 +25,11 @@ const ClassList = () => {
             <Class key={bjjClass.id} bjjClass={bjjClass} /> 
           ))}
         </div>
+        <div className="add-class-btn">
+          <Link to="/classes/add">
+            <button className="btn btn-primary">Add Class</button>
+          </Link>
+          </div>
       </div>
     </div>
   );
