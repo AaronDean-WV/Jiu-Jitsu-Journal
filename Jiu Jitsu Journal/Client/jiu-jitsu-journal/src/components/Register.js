@@ -1,18 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { useNavigate } from "react-router-dom";
-import { UserProfileContext, register } from "../APIManagers/UserProfileManager";
+import {  register } from "../APIManagers/UserProfileManager";
 
 
 export default function Register({ setIsLoggedIn }) {
   const navigate = useNavigate();
-  const { user } = useContext(UserProfileContext);
-
-  const [fullName, setFullName] = useState(user.fullName || "");
-  const [email, setEmail] = useState(user.email || "");
-  const [weeklyClassGoal, setWeeklyClassGoal] = useState(user.weeklyClassGoal || 0);
-  const [weeklyRollGoal, setWeeklyRollGoal] = useState(user.weeklyRollGoal || 0);
-  const [beltRank, setBeltRank] = useState(user.beltRank || "White"); // Set default to "White"
+  const localJournalUser = localStorage.getItem("userProfile")
+  const user = JSON.parse(localJournalUser)
+  const [fullName, setFullName] = useState( "");
+  const [email, setEmail] = useState( "");
+  const [weeklyClassGoal, setWeeklyClassGoal] = useState(0);
+  const [weeklyRollGoal, setWeeklyRollGoal] = useState(0);
+  const [beltRank, setBeltRank] = useState(); // Set default to "White"
 
   //setting up a map to convert the belt rank to the id in the database
   const beltRankIdMap = {
@@ -54,10 +54,12 @@ export default function Register({ setIsLoggedIn }) {
     };
 
     register(userProfile)
-      .then(() => {
-        setIsLoggedIn(true);
-        navigate('/');
-      });
+    .then(() => {
+      setIsLoggedIn(true);
+      localStorage.setItem("userProfile", JSON.stringify(userProfile)); // Set user profile data
+      navigate('/');
+    });
+  
   };
 
   return (

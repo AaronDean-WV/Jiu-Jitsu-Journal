@@ -1,43 +1,73 @@
-import React, { useState, useContext } from "react";
-import {
-  Form,
-  FormGroup,
-  Card,
-  CardBody,
-  Label,
-  Input,
-  Button,
-} from "reactstrap";
-import { addClass } from "../APIManagers/ClassManager";
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { useNavigate } from "react-router-dom";
-import { ClassContext } from "../APIManagers/ClassManager";
-import { UserProfileContext } from "../APIManagers/UserProfileManager";
+﻿import { useContext, useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { Button, FormGroup, Input, Label } from "reactstrap"
+import { addClass } from "../APIManagers/ClassManager.js"
+import { Card, CardBody } from "reactstrap"
+import { Form } from "reactstrap"
+import DatePicker from "react-datepicker"
+
+
+
 
 export const ClassForm = () => {
-  const { addClass } = useContext(ClassContext);
-  const { userProfileId } = useContext(UserProfileContext);
-  const [typeOfClass, setTypeOfClass] = useState("");
-  const [notes, setNotes] = useState("");
-  const [selectedDate, setSelectedDate] = useState(null);
+
+   
+    const { classId } = useParams();
+    const localJournalUser = localStorage.getItem("userProfile")
+    const journalUserObject = JSON.parse(localJournalUser)
+    const navigate = useNavigate();
+    const currentDate = new Date();
+    const offset = currentDate.getTimezoneOffset();
+    const timezoneOffset = offset * 60 * 1000;
+    const correctedDate = new Date(currentDate.getTime() - timezoneOffset)
+    const [typeOfClass, setTypeOfClass] = useState("");
+    const [selectedDate, setSelectedDate] = useState(correctedDate);
     const [rollsCompleted, setRollsCompleted] = useState("");
+    const [notes, setNotes] = useState("");
 
-  const navigate = useNavigate();
 
-  const submit = (e) => {
-    const bjjClass = {
-      typeOfClass,
-      notes,
-      selectedDate,
-      userProfileId: userProfileId.id,
+    const [newClass, updateClass] = useState({
+        Id: classId,
+        UserProfileId: journalUserObject.id,
+        Notes: "",
+        TypeOfClass: "",
+        Date: correctedDate.toISOString(),
+        RollCount: 0
+    })
+
+    const submit = (e) => {
+        e.preventDefault()
+        updateClass({
+            Id: classId,
+            UserProfileId: journalUserObject.id,
+            Notes: notes,
+            TypeOfClass: typeOfClass,
+            Date: correctedDate.toISOString(),
+            RollCount: rollsCompleted
+        })
+    }
+
+    const handleSaveButtonClick = (e) => {
+        e.preventDefault()
+
+        const classToSendToAPI = {
+            Id: classId,
+            UserProfileId: journalUserObject.id,
+            Notes: newClass.notes,
+            TypeOfClass: newClass.typeOfClass,
+            Date: correctedDate.toISOString(),
+            RollCount: newClass.rollCount
+        }
+
+        console.log(classId)
+        addClass(classToSendToAPI)
+        .then(() => {
+            if (classId) {
+                navigate(`/class/${classId}`);
+            }
+        });
     };
-
-    addClass(bjjClass).then((c) => {
-      // Navigate the user back to the home route
-      navigate("/");
-    });
-  };
 
   return (
     <div className="container pt-4">

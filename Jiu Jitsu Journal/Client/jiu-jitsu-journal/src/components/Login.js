@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { useNavigate, Link } from "react-router-dom";
 import { login } from "../APIManagers/UserProfileManager";
-import { getUserStatus } from "../APIManagers/UserProfileManager";
+
 
 export default function Login({setIsLoggedIn}) {
   const navigate = useNavigate();
-
   const [email, setEmail] = useState();
   
 

@@ -1,52 +1,52 @@
-import React from "react";
-import { Card, CardBody, Button } from "reactstrap";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import { Button, Card, CardBody } from "reactstrap";
+import { getUserProfileById } from "../APIManagers/UserProfileManager";
 
-export const UserProfile = ({
-  userProfileProp,
-  handleDeactivateUser
-}) => {
-  const confirmDeactivate = () => {
-    const confirmation = window.confirm("Are you sure you want to deactivate this user?");
-    if (confirmation) {
-      handleDeactivateUser(userProfileProp.id);
-    }
-  };
+
+export const UserProfile = () => {
+  const [userProfile, setUserProfile] = useState(null);
+  const { id } = useParams();
+
+  useEffect(() => {
+    getUserProfileById(id).then(setUserProfile);
+  }, [id]);
+
+  if (!userProfile) {
+    return <div>Loading...</div>;
+  }
+  const beltRankColor = userProfile?.beltRank?.color;
+  const beltRankImg = userProfile?.beltRank?.img;
 
   return (
     <Card className="m-4 text-center">
       <CardBody>
         <div>
           <strong className="userProfile-title">
-            <Link to={`/userprofiles/${userProfileProp.id}`}>
-              <h5>{userProfileProp.fullName}</h5>
-            </Link>
+              <h5>{userProfile?.fullName}</h5>
           </strong>
           <div>
-            <strong>Belt Rank:</strong> {userProfileProp.beltRank}
+            <strong>Belt Rank:</strong> {beltRankColor}
           </div>
           <div>
-            <img
-              src={userProfileProp.img} 
-              alt={userProfileProp.beltRank}
-              width="50" 
-              height="50" 
-            />
+          <img
+  src={beltRankImg} 
+  alt={beltRankColor}
+  width="150" 
+  height="100" 
+/>
+
           </div>
           <div>
-            <strong>Weekly Class Goal:</strong> {userProfileProp.weeklyClassGoal}
+            <strong>Weekly Class Goal:</strong> {userProfile?.weeklyClassGoal}
           </div>
           <div>
-            <strong>Weekly Roll Goal:</strong> {userProfileProp.weeklyRollGoal}
+            <strong>Weekly Roll Goal:</strong> {userProfile?.weeklyRollGoal}
           </div>
-          <Button
-            color="danger"
-            className="mb-2"
-            onClick={confirmDeactivate}
-          >
-            Deactivate
-          </Button>
         </div>
+        <Button tag={Link} to="/users/:id/edit" className="btn btn-primary">
+        Edit Profile
+      </Button>
       </CardBody>
     </Card>
   );

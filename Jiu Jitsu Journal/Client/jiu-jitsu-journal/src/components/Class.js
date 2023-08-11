@@ -8,25 +8,25 @@ export const Class = ({ bjjClass }) => {
       <CardBody>
         <p>
           <strong>Date: </strong>
-          <Link to={`/class/${bjjClass.id}`}>
-            {new Date(bjjClass.date).toLocaleDateString()}
+          <Link to={`/class/${bjjClass?.id}`}>
+            {new Date(bjjClass?.date).toLocaleDateString()}
           </Link>
         </p>
         <p>
           <strong>Notes: </strong>
-          {bjjClass.notes}
+          {bjjClass?.notes}
         </p>
         <p>
           <strong>Type of Class: </strong>
-          {bjjClass.typeOfClass}
+          {bjjClass?.typeOfClass}
         </p>
         <p>
           <strong>Posted by: </strong>
-          {bjjClass.userProfile.fullName}
+          {bjjClass?.userProfile.fullName}
         </p>
         <p>
           <strong>Roll Count: </strong>
-          {bjjClass.rollCount}
+          {bjjClass?.rollCount}
         </p>
       </CardBody>
     </Card>

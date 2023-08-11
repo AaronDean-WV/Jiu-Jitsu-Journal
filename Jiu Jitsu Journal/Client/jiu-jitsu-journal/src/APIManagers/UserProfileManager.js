@@ -1,21 +1,17 @@
-import React, { useState, createContext } from "react";
-
 const apiUrl = "https://localhost:5001";
 
-export const UserProfileContext = createContext();
 export const login = (userObject) => {
-  return fetch(`${apiUrl}/api/userprofile/getbyemail?email=${userObject.email}`)
-    .then((r) => r.json())
-    .then((userProfile) => {
-      if (userProfile && userProfile.id && userProfile.isActive) {
-        localStorage.setItem("userProfile", JSON.stringify(userProfile));
-        return userProfile;
-      } else {
-        throw new Error("Invalid email or account deactivated");
+ return fetch(`${apiUrl}/api/UserProfile/GetByEmail/${userObject.email}`)
+
+  .then((r) => r.json())
+    .then((user) => {
+      if(user.id){
+        localStorage.setItem("userProfile", JSON.stringify(user));
+        return user
       }
-    })
-    .catch((error) => {
-      throw new Error("Invalid email or account deactivated");
+      else{
+        return undefined
+      }
     });
 };
 
@@ -23,12 +19,8 @@ export const logout = () => {
       localStorage.clear()
 };
 
-export const getUserStatus = (email) => {
-  return fetch(`${apiUrl}/api/UserProfile/GetByEmail?email=${email}`).then((res) => res.json());
-};
-
-export const register = (userObject, password) => {
-  return  fetch(`${apiUrl}/api/userprofile`, {
+export const register = (userObject) => {
+  return  fetch(`${apiUrl}/api/UserProfile`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -36,38 +28,34 @@ export const register = (userObject, password) => {
     body: JSON.stringify(userObject),
   })
   .then((response) => response.json())
-    .then((savedUserProfile) => {
-      localStorage.setItem("userProfile", JSON.stringify(savedUserProfile))
+    .then((savedUser) => {
+      localStorage.setItem("userProfile", JSON.stringify(savedUser))
     });
 };
-
+export const getUserStatus = (email) => {
+  return fetch(`${apiUrl}/api/UserProfile/GetByEmail?email=${email}`).then((res) => res.json());
+};
 
 export const getAllUserProfiles = () => {
-  return fetch(`${apiUrl}/api/userprofile`)
+  return fetch(`${apiUrl}/api/UserProfile`)
   .then((response) => response.json())
 };
 
 export const getUserProfileById = (id) => {
-  return fetch(`${apiUrl}/api/userprofile/${id}`)
-  .then((response) => response.json())
+  if (!id) {
+    throw new Error('User ID is undefined');
+  }
+  return fetch(`${apiUrl}/api/UserProfile/${id}`)
+    .then((response) => response.json());
 };
 
 
-export const deleteUserProfile = (id) => {
-    return fetch(`${apiUrl}/api/userprofile/${id}`, {
-      method: "DELETE",
-    });
-  }
-  
-
-
-
 export const editUserProfile = (userProfile) => {
-  return fetch(`${apiUrl}/api/UserProfile/${userProfile.Id}`, {
-      method: "PUT",
-      headers: {
-          "Content-Type": "application/json"
-      },
-      body: JSON.stringify(userProfile)
-  })
-}
+  return fetch(`${apiUrl}/api/userprofile/${userProfile.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userProfile),
+  });
+};

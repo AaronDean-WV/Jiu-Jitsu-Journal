@@ -39,20 +39,3 @@ CREATE TABLE [Class] (
   [RollCount] integer NOT NULL,
 )
 
-CREATE TABLE [WeeklyReport] (
-  [Id] integer PRIMARY KEY IDENTITY,
-  [Date] date NOT NULL,
-  [UserId] integer NOT NULL,
-  [ClassId] integer NOT NULL,
-  [TotalClasses] integer NOT NULL,
-  [TotalRolls] integer NOT NULL,
-)
-
-CREATE TABLE [PreviousWeeks] (
-  [Id] integer PRIMARY KEY IDENTITY,
-  [Date] date NOT NULL,
-  [UserId] integer NOT NULL,
-  [ClassId] integer NOT NULL,
-  [TotalClasses] integer NOT NULL,
-  [TotalRolls] integer NOT NULL,
-)
