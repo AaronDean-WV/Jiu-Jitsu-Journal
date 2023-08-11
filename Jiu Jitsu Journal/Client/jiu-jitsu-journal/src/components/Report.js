@@ -6,6 +6,8 @@ import WeeklyReport from "./WeeklyReport.Js";
 
 export const ReportsPage = ({ classes, userProfileId }) => {
   const [reportType, setReportType] = useState("monthly"); // Default to monthly report
+  const localJournalUser = localStorage.getItem("userProfile")
+  const journalUserObject = JSON.parse(localJournalUser)
 
   return (
     <div>
@@ -15,9 +17,9 @@ export const ReportsPage = ({ classes, userProfileId }) => {
         <button onClick={() => setReportType("weekly")}>Weekly Report</button>
       </div>
       {reportType === "monthly" ? (
-        <MonthlyReport classes={classes} userProfileId={userProfileId} />
+        <MonthlyReport classes={classes} userProfileId={journalUserObject.id} />
       ) : (
-        <WeeklyReport classes={classes} userProfileId={userProfileId} />
+        <WeeklyReport classes={classes} userProfileId={journalUserObject.id} />
       )}
     </div>
   );

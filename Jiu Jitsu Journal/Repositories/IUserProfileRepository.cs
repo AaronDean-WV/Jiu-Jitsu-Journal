@@ -10,6 +10,7 @@ namespace Jiu_Jitsu_Journal.Repositories
         void Add(UserProfile userProfile);
         void Update(UserProfile userProfile);
         void Delete(int id);
+        UserProfile GetByEmail(string email);
 
     }
 }

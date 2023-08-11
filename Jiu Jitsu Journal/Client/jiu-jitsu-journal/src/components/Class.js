@@ -21,10 +21,6 @@ export const Class = ({ bjjClass }) => {
           {bjjClass?.typeOfClass}
         </p>
         <p>
-          <strong>Posted by: </strong>
-          {bjjClass?.userProfile.fullName}
-        </p>
-        <p>
           <strong>Roll Count: </strong>
           {bjjClass?.rollCount}
         </p>

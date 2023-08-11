@@ -50,12 +50,20 @@ export const getUserProfileById = (id) => {
 };
 
 
-export const editUserProfile = (userProfile) => {
-  return fetch(`${apiUrl}/api/userprofile/${userProfile.id}`, {
+export const editUserProfile = (userProfileObject) => {
+  return fetch(`${apiUrl}/api/UserProfile/edit/${userProfileObject.Id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(userProfile),
+    body: JSON.stringify(userProfileObject),
   });
 };
+
+export const deleteProfile = (id) => {
+  return fetch(`${apiUrl}/api/UserProfile/${id}`, {
+    method: "DELETE",
+    
+  })
+  .then( () => localStorage.clear());
+}

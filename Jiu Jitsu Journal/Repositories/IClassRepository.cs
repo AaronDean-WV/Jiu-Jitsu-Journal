@@ -3,10 +3,10 @@ using Jiu_Jitsu_Journal.Models;
 
 namespace Jiu_Jitsu_Journal.Repositories
 {
-    public interface IClassRepository
+    public interface IBjjClassRepository
     {
-        List<Class> GetAll();
-        void Add(Class Class);
+        List<BjjClass> GetAll();
+        void Add(BjjClass Class);
      
     }
 }

@@ -18,17 +18,17 @@ namespace Jiu_Jitsu_Journal.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        INSERT INTO UserProfile (FullName, Email, StartDate, WeeklyClassGoal, WeeklyRollGoal, BeltRank)
-                        VALUES (@FullName, @Email, @StartDate, @WeeklyClassGoal, @WeeklyRollGoal, @BeltRank)";
+                        INSERT INTO UserProfile (FullName, Email,  WeeklyClassGoal, WeeklyRollGoal)
+                        OUTPUT INSERTED.ID
+                        VALUES (@FullName, @Email,  @WeeklyClassGoal, @WeeklyRollGoal)";
 
                     DbUtils.AddParameter(cmd, "@FullName", userProfile.FullName);
                     DbUtils.AddParameter(cmd, "@Email", userProfile.Email);
-                    DbUtils.AddParameter(cmd, "@StartDate", userProfile.StartDate);
                     DbUtils.AddParameter(cmd, "@WeeklyClassGoal", userProfile.WeeklyClassGoal);
                     DbUtils.AddParameter(cmd, "@WeeklyRollGoal", userProfile.WeeklyRollGoal);
-                    DbUtils.AddParameter(cmd, "@BeltRank", userProfile.BeltRank);
+             
 
-                    cmd.ExecuteNonQuery();
+                    userProfile.Id = (int)cmd.ExecuteScalar();
                 }
             }
         }
@@ -56,7 +56,7 @@ namespace Jiu_Jitsu_Journal.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, FullName, Email,  StartDate, WeeklyClassGoal, WeeklyRollGoal, BeltRank
+                        SELECT Id, FullName, Email, WeeklyClassGoal, WeeklyRollGoal
                         FROM UserProfile";
 
                     using (var reader = cmd.ExecuteReader())
@@ -68,15 +68,9 @@ namespace Jiu_Jitsu_Journal.Repositories
                                 Id = DbUtils.GetInt(reader, "Id"),
                                 FullName = DbUtils.GetString(reader, "FullName"),
                                 Email = DbUtils.GetString(reader, "Email"),
-                                StartDate = DbUtils.GetDateTime(reader, "StartDate"),
                                 WeeklyClassGoal = DbUtils.GetInt(reader, "WeeklyClassGoal"),
                                 WeeklyRollGoal = DbUtils.GetInt(reader, "WeeklyRollGoal"),
-                                BeltRank = new BeltRank()
-                                {
-                                    Id = DbUtils.GetInt(reader, "BeltRankId"),
-                                    Rank = DbUtils.GetString(reader, "BeltRankName"),
-                                    Img = DbUtils.GetString(reader, "BeltRankImgUrl"),
-                                },  
+                               
                             };
 
                             userProfiles.Add(userProfile);
@@ -86,6 +80,42 @@ namespace Jiu_Jitsu_Journal.Repositories
             }
 
             return userProfiles;
+        }
+        public UserProfile GetByEmail (string email)
+        {
+            UserProfile userProfile = null;
+
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                       SELECT Id, FullName, Email, WeeklyClassGoal, WeeklyRollGoal
+                        FROM UserProfile
+                        WHERE Email = @Email";
+
+                    DbUtils.AddParameter(cmd, "@Email", email);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            userProfile = new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "Id"),
+                                FullName = DbUtils.GetString(reader, "FullName"),
+                                Email = DbUtils.GetString(reader, "Email"),
+                                WeeklyClassGoal = DbUtils.GetInt(reader, "WeeklyClassGoal"),
+                                WeeklyRollGoal = DbUtils.GetInt(reader, "WeeklyRollGoal"),
+                               
+                            };
+                        }
+                    }
+                }
+            }
+
+            return userProfile;
         }
 
         public UserProfile GetById(int id)
@@ -98,7 +128,7 @@ namespace Jiu_Jitsu_Journal.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, FullName, Email, StartDate, WeeklyClassGoal, WeeklyRollGoal, BeltRank
+                        SELECT Id, FullName, Email, WeeklyClassGoal, WeeklyRollGoal
                         FROM UserProfile
                         WHERE Id = @Id";
 
@@ -113,15 +143,9 @@ namespace Jiu_Jitsu_Journal.Repositories
                                 Id = DbUtils.GetInt(reader, "Id"),
                                 FullName = DbUtils.GetString(reader, "FullName"),
                                 Email = DbUtils.GetString(reader, "Email"),
-                                StartDate = DbUtils.GetDateTime(reader, "StartDate"),
                                 WeeklyClassGoal = DbUtils.GetInt(reader, "WeeklyClassGoal"),
                                 WeeklyRollGoal = DbUtils.GetInt(reader, "WeeklyRollGoal"),
-                                BeltRank = new BeltRank()
-                                {
-                                    Id = DbUtils.GetInt(reader, "BeltRankId"),
-                                    Rank = DbUtils.GetString(reader, "BeltRankName"),
-                                    Img = DbUtils.GetString(reader, "BeltRankImgUrl"),
-                                },
+                              
                             };
                         }
                     }
@@ -142,18 +166,16 @@ namespace Jiu_Jitsu_Journal.Repositories
                         UPDATE UserProfile
                         SET FullName = @FullName,
                             Email = @Email,
-                            StartDate = @StartDate,
                             WeeklyClassGoal = @WeeklyClassGoal,
-                            WeeklyRollGoal = @WeeklyRollGoal,
-                            BeltRank = @BeltRank
+                            WeeklyRollGoal = @WeeklyRollGoal
+                          
                         WHERE Id = @Id";
 
                     DbUtils.AddParameter(cmd, "@FullName", userProfile.FullName);
                     DbUtils.AddParameter(cmd, "@Email", userProfile.Email);
-                    DbUtils.AddParameter(cmd, "@StartDate", userProfile.StartDate);
+                   ;
                     DbUtils.AddParameter(cmd, "@WeeklyClassGoal", userProfile.WeeklyClassGoal);
                     DbUtils.AddParameter(cmd, "@WeeklyRollGoal", userProfile.WeeklyRollGoal);
-                    DbUtils.AddParameter(cmd, "@BeltRank", userProfile.BeltRank);
                     DbUtils.AddParameter(cmd, "@Id", userProfile.Id);
 
                     cmd.ExecuteNonQuery();
