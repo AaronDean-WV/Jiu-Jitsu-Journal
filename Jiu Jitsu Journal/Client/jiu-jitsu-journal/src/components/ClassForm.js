@@ -6,7 +6,7 @@ import { addClass } from "../APIManagers/ClassManager.js"
 import { Card, CardBody } from "reactstrap"
 import { Form } from "reactstrap"
 import DatePicker from "react-datepicker"
-
+import "react-datepicker/dist/react-datepicker.css"; 
 
 
 
@@ -25,33 +25,23 @@ export const ClassForm = () => {
     const [selectedDate, setSelectedDate] = useState(correctedDate);
     const [rollsCompleted, setRollsCompleted] = useState("");
     const [notes, setNotes] = useState("");
+    const [date, setDate] = useState("");
 
 
     const [newClass, updateClass] = useState({
-        UserProfileId: 1,
-        Date: correctedDate.toISOString(),
+        
+        Date: "",
         Notes: "",
         RollCount: 0,
         TypeOfClass: ""
     })
 
-    const submit = (e) => {
-        e.preventDefault()
-        updateClass({
-            
-            Date: correctedDate.toISOString(),
-            Notes: notes,
-            RollCount: rollsCompleted,
-            TypeOfClass: typeOfClass
-        })
-    }
-
     const handleSaveButtonClick = (e) => {
         e.preventDefault()
 
         const classToSendToAPI = {
-            UserProfileId: 1,
-            Date: correctedDate.toISOString(),
+         
+            Date: newClass.Date,
             Notes: newClass.Notes,
             RollCount: newClass.RollCount,
             TypeOfClass: newClass.TypeOfClass
@@ -61,7 +51,7 @@ export const ClassForm = () => {
         addClass(classToSendToAPI)
         .then((classId) => {
             if (classId) {
-                navigate("/");
+                navigate("/classlist");
             }
         });
     };
@@ -89,14 +79,20 @@ export const ClassForm = () => {
                 </select>
               </FormGroup>
               <FormGroup>
-              <Label for="date">Date</Label>
-                <DatePicker
-                  id="date"
-                  selected={selectedDate}
-                  onChange={(date) => setSelectedDate(date)}
-                  dateFormat="yyyy-MM-dd"
-                />
-              </FormGroup>
+  <Label for="date">Date</Label>
+  <DatePicker
+    id="date"
+    selected={newClass.Date}
+    onChange={(date) => {
+      const copy = { ...newClass };
+      copy.Date = date;
+      updateClass(copy);
+    }}
+    dateFormat="yyyy-MM-dd"
+  />
+</FormGroup>
+
+
               <FormGroup>
                 <Label for="rollsCompleted">Number of Rolls Completed</Label>
                 <select

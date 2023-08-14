@@ -1,48 +1,67 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { getAllClasses } from "../APIManagers/ClassManager";
+import DatePicker from "react-datepicker"; // Import the DatePicker component
+import "react-datepicker/dist/react-datepicker.css"; 
+import { Class } from "./Class";
+import { Link } from "react-router-dom";
 
-const MonthlyReport = ({}) => {
-  const classData = [
-    {
-      Id: 1, 
-      Date: "2021-01-01T00:00:00",
-      Notes: "This is a note",
-      RollCount: 10,
-      TypeOfClass: "Gi",
-    },
-  ];
-  // Get the current month and year
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  const currentMonth = currentDate.getMonth() + 1; // Months are 0-indexed
+const MonthlyReport = () => {
+  const [classes, setClasses] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState(new Date());
 
-  // Filter classData to include only classes from the current month and year
-  const classesThisMonth = classData.filter(classItem => {
-    const classDate = new Date(classItem.Date);
+  const getClasses = () => {
+    getAllClasses().then(allClasses => setClasses(allClasses)); 
+  };
+
+  useEffect(() => {
+    getClasses();
+  }, [selectedMonth]); // Add selectedMonth as a dependency
+  
+  // Filter classes by selected month
+  const filteredClasses = classes.filter(bjjClass => {
+    const classDate = new Date(bjjClass.date);
     return (
-      classDate.getFullYear() === currentYear && classDate.getMonth() + 1 === currentMonth
+      classDate.getFullYear() === selectedMonth.getFullYear() &&
+      classDate.getMonth() === selectedMonth.getMonth()
     );
   });
+  // Sort filtered classes by date
+  const sortedClasses = filteredClasses.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-  // Calculate total rolls completed for the current month
-  const totalRollsCompleted = classesThisMonth.reduce(
-    (total, classItem) => total + parseInt(classItem.RollCount),
-    4
-  );
+  // Calculate the number of gi and no gi classes attended
+  const giClasses = sortedClasses.filter(bjjClass => bjjClass.typeOfClass === "Gi");
+  const noGiClasses = sortedClasses.filter(bjjClass => bjjClass.typeOfClass === "No Gi");
 
-  // Calculate average rolls per class for the current month
-  const averageRollsPerClass =
-    totalRollsCompleted / (classesThisMonth.length || 1); // Prevent division by zero
+  // Calculate total number of classes attended
+  const totalClassesAttended = sortedClasses.length;
+
+  // Calculate average daily rolls
+  const totalRolls = sortedClasses.reduce((sum, bjjClass) => sum + bjjClass.rollCount, 0);
+  const averageDailyRolls = totalRolls / sortedClasses.length || 0;
 
   return (
-    <div className="container pt-4">
+    <div className="container">
       <div className="row justify-content-center">
-        <div className="col-sm-12 col-lg-6">
+        <div className="cards-column">
+        <div className="month-selector">
+          <label htmlFor="month">Select Month:</label>
+          <DatePicker
+            id="month"
+            selected={selectedMonth}
+            onChange={date => setSelectedMonth(date)}
+            dateFormat="MMMM yyyy"
+            showMonthYearPicker
+          />
+        </div>
           <h2>Monthly Report</h2>
-          <p>Month: {currentMonth}/{currentYear}</p>
-          <p>Total Rolls Completed: {totalRollsCompleted}</p>
-          <p>Average Rolls Per Class: {averageRollsPerClass.toFixed(2)}</p>
-          <p>Classes Attended: {1}</p>
-          {/* Add more statistics and information here */}
+          <p>Number of Gi Classes Attended: {giClasses.length}</p>
+          <p>Number of No Gi Classes Attended: {noGiClasses.length}</p>
+          <p>Total Number of Classes Attended: {totalClassesAttended}</p>
+          <p>Average Daily Rolls: {averageDailyRolls.toFixed(2)}</p>
+          <h3>Dates Attended</h3>
+          {sortedClasses.map((bjjClass) => (
+            <p key={bjjClass.id}>{new Date(bjjClass.date).toDateString()}</p>
+          ))}
         </div>
       </div>
     </div>

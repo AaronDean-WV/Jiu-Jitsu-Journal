@@ -8,16 +8,17 @@ import ReportsPage from "./Report";
 import WeeklyReport from "./WeeklyReport.Js";
 import { Class } from "./Class";
 import Login from "./Login";
+import { ClassDetails } from "./ClassDetails";
 
 const ApplicationViews = () => {
   return (
     <Routes>
       <Route path="/classlist" element={<ClassList />} />
-      <Route path="/class/:classId" element={<Class />} />
+      <Route path="/class/:id" element={<ClassDetails />} />
       <Route path="/classes/add" element={<ClassForm />} />
       <Route path="/userprofile/:id" element={<UserProfile />} />
       <Route path="/userprofile/edit/:id" element={<UserProfileEdit />} />
-      <Route path="/" element={<MonthlyReport />} />
+      <Route path="/report" element={<MonthlyReport />} />
       <Route path="/report/weekly-report/:id" element={<WeeklyReport />} />
       <Route path="/report" element={<ReportsPage />} />
       <Route path="/login" element={<Login />} />
