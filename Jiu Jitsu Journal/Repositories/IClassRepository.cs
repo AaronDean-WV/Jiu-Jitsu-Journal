@@ -7,6 +7,7 @@ namespace Jiu_Jitsu_Journal.Repositories
     {
         List<BjjClass> GetAll();
         void Add(BjjClass Class);
+        BjjClass GetByClassId(int id);
      
     }
 }

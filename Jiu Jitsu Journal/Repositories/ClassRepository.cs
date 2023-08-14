@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Jiu_Jitsu_Journal.Models;
 using Microsoft.Extensions.Configuration;
+using Jiu_Jitsu_Journal.Utils;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Jiu_Jitsu_Journal.Repositories
 {
@@ -30,7 +32,7 @@ namespace Jiu_Jitsu_Journal.Repositories
                     TypeOfClass = reader.GetString(reader.GetOrdinal("TypeOfClass")),
                     Date = reader.GetDateTime(reader.GetOrdinal("Date")),
                     RollCount = reader.GetInt32(reader.GetOrdinal("RollCount")),
-                   
+
                 });
             }
             reader.Close();
@@ -50,9 +52,40 @@ namespace Jiu_Jitsu_Journal.Repositories
             cmd.Parameters.AddWithValue("@typeOfClass", classInstance.TypeOfClass);
             cmd.Parameters.AddWithValue("@date", classInstance.Date);
             cmd.Parameters.AddWithValue("@rollCount", classInstance.RollCount);
-          
+
 
             cmd.ExecuteNonQuery();
+        }
+        public BjjClass GetByClassId(int id)
+        {
+            BjjClass bjjClass = null;
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+SELECT Id, Notes, TypeOfClass, Date, RollCount
+FROM BjjClass
+WHERE Id = @Id";
+                    DbUtils.AddParameter(cmd, "@Id", id);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            bjjClass = new BjjClass()
+                            {
+                                Id = DbUtils.GetInt(reader, "Id"),
+                                Notes = DbUtils.GetString(reader, "Notes"),
+                                TypeOfClass = DbUtils.GetString(reader, "TypeOfClass"),
+                                Date = DbUtils.GetDateTime(reader, "Date"),
+                                RollCount = DbUtils.GetInt(reader, "RollCount"),
+                            };
+                        }
+                    }
+                }
+            }
+            return bjjClass;
         }
     }
 }

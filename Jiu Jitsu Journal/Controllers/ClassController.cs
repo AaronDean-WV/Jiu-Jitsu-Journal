@@ -32,7 +32,16 @@ namespace Jiu_Jitsu_Journal.Controllers
             _bjjClassRepository.Add(bjjClassInstance);
             return Ok();
         }
-
+        [HttpGet("{id}")]
+        public IActionResult GetByClassId(int id)
+        {
+            var bjjClass = _bjjClassRepository.GetByClassId(id);
+            if (bjjClass == null)
+            {
+                return NotFound();
+            }
+            return Ok(bjjClass);
+        }
         //[HttpGet("weekly-report/{userProfileId}")]
         //public IActionResult GenerateWeeklyReport(int userProfileId, [FromQuery] string startDate, [FromQuery] string endDate)
         //{
