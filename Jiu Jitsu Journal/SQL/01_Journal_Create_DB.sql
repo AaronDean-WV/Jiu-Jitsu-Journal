@@ -31,6 +31,7 @@ CREATE TABLE [BJJClass] (
   [Notes] nvarchar(1000) NOT NULL,
   [RollCount] integer NOT NULL,
   [TypeOfClass] nvarchar(20) NOT NULL,
+  [UserProfileId] integer NOT NULL,
 
 
 )

@@ -9,6 +9,10 @@ export const getById = (id) => {
   return fetch(`${baseUrl}/${id}`)
     .then((res) => res.json())
 };
+export const getClassByUserId = (id) => {
+  return fetch(`${baseUrl}/GetByUserId/${id}`)
+    .then((res) => res.json())
+};
 
 
 export const addClass = (singleClass) => { 

@@ -42,7 +42,7 @@ export const UserProfile = () => {
             <strong>Weekly Class Goal:</strong> {userProfile?.weeklyClassGoal}
           </div>
           <div>
-            <strong>Weekly Roll Goal:</strong> {userProfile?.weeklyRollGoal}
+            <strong>Daily Roll Goal:</strong> {userProfile?.weeklyRollGoal}
           </div>
         </div>
         <Button  className="btn btn-primary" onClick={() => navigate(`/userprofile/edit/${user?.id}`)}>

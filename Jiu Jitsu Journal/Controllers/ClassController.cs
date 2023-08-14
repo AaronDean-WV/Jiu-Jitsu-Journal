@@ -10,12 +10,12 @@ namespace Jiu_Jitsu_Journal.Controllers
     public class ClassController : ControllerBase
     {
         private readonly IBjjClassRepository _bjjClassRepository;
-        //private readonly WeeklyReportGenerator _weeklyReportGenerator; 
+        private readonly IUserProfileRepository _userProfileRepository;
 
         public ClassController(IBjjClassRepository bjjClassRepository)
         {
             _bjjClassRepository = bjjClassRepository;
-            //_weeklyReportGenerator = weeklyReportGenerator;
+           _userProfileRepository = _userProfileRepository;
         }
 
         [HttpGet]
@@ -28,7 +28,7 @@ namespace Jiu_Jitsu_Journal.Controllers
         [HttpPost]
         public IActionResult AddClass([FromBody] BjjClass bjjClassInstance)
         {
-            
+
             _bjjClassRepository.Add(bjjClassInstance);
             return Ok();
         }
@@ -42,18 +42,16 @@ namespace Jiu_Jitsu_Journal.Controllers
             }
             return Ok(bjjClass);
         }
-        //[HttpGet("weekly-report/{userProfileId}")]
-        //public IActionResult GenerateWeeklyReport(int userProfileId, [FromQuery] string startDate, [FromQuery] string endDate)
-        //{
-            
-        //    if (!DateTime.TryParse(startDate, out var startDateTime) || !DateTime.TryParse(endDate, out var endDateTime))
-        //    {
-        //        return BadRequest("Invalid date format. Please use the format: YYYY-MM-DD");
-        //    }
-
-           
-        //    var report = _weeklyReportGenerator.GenerateWeeklyReportForUser(userProfileId, startDateTime, endDateTime);
-        //    return Ok(report);
-        //}
+        [HttpGet("GetByUserId/{id}")]
+        public IActionResult GetClassesByUserId(int id)
+        {
+            var bjjClasses = _bjjClassRepository.GetClassesByUserId(id);
+            if (bjjClasses == null)
+            {
+                return NotFound();
+            }
+            return Ok(bjjClasses);
+        }
     }
 }
+

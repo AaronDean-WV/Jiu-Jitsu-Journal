@@ -7,6 +7,7 @@ import { Card, CardBody } from "reactstrap"
 import { Form } from "reactstrap"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"; 
+import { UserProfile } from "./UserProfile.js"
 
 
 
@@ -33,7 +34,8 @@ export const ClassForm = () => {
         Date: "",
         Notes: "",
         RollCount: 0,
-        TypeOfClass: ""
+        TypeOfClass: "",
+        UserProfileId: journalUserObject.id
     })
 
     const handleSaveButtonClick = (e) => {
@@ -44,7 +46,8 @@ export const ClassForm = () => {
             Date: newClass.Date,
             Notes: newClass.Notes,
             RollCount: newClass.RollCount,
-            TypeOfClass: newClass.TypeOfClass
+            TypeOfClass: newClass.TypeOfClass,
+            UserProfileId: newClass.UserProfileId
         }
 
         console.log("classToSendToAPI", classToSendToAPI)

@@ -6,7 +6,6 @@ import MonthlyReport from "./MonthlyReport";
 import { UserProfileEdit } from "./EditUserProfile";
 import ReportsPage from "./Report";
 import WeeklyReport from "./WeeklyReport.Js";
-import { Class } from "./Class";
 import Login from "./Login";
 import { ClassDetails } from "./ClassDetails";
 

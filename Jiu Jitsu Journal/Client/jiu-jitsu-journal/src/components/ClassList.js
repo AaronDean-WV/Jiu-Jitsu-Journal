@@ -1,58 +1,70 @@
 import React, { useState, useEffect } from "react";
-import { getAllClasses } from "../APIManagers/ClassManager";
-import { Class } from "./Class";
+import { getClassByUserId } from "../APIManagers/ClassManager";
 import { Link } from "react-router-dom";
 
 const ClassList = () => {
   const [classes, setClasses] = useState([]);
-  const [selectedMonth, setSelectedMonth] = useState(null);
+  const localJournalUser = localStorage.getItem("userProfile");
+  const journalUserObject = JSON.parse(localJournalUser);
 
   const getClasses = () => {
-    getAllClasses().then(allClasses => setClasses(allClasses)); 
+    getClassByUserId(journalUserObject.id).then(allClasses => setClasses(allClasses));
   };
 
   useEffect(() => {
     getClasses();
-  }, []); 
+  }, []);
 
   // Sort classes by date
   const sortedClasses = classes.sort((a, b) => new Date(a.date) - new Date(b.date));
 
   // Group classes by month
-  const groupedClasses = sortedClasses.reduce((acc, bjjClass) => {
-    const date = new Date(bjjClass.date);
-    const monthYear = date.toLocaleString("default", { month: "long", year: "numeric" });
-    if (!acc[monthYear]) {
-      acc[monthYear] = [];
+  const groupedClasses = {};
+  sortedClasses.forEach(bjjClass => {
+    const monthYear = new Date(bjjClass.date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long"
+    });
+    if (!groupedClasses[monthYear]) {
+      groupedClasses[monthYear] = [];
     }
-    acc[monthYear].push(bjjClass);
-    return acc;
-  }, {});
+    groupedClasses[monthYear].push(bjjClass);
+  });
 
-  const handleMonthClick = (month) => {
-    setSelectedMonth(month);
+  // State to track visibility of each month's classes
+  const [expandedMonths, setExpandedMonths] = useState({});
+
+  // Toggle the visibility of classes for a specific month
+  const toggleMonthVisibility = monthYear => {
+    setExpandedMonths(prevState => ({
+      ...prevState,
+      [monthYear]: !prevState[monthYear]
+    }));
   };
 
   return (
     <div className="container">
       <div className="row justify-content-center">
         <div className="cards-column">
-          {selectedMonth ? (
-            <div>
-              <button onClick={() => setSelectedMonth(null)}>Back to all classes</button>
-              {groupedClasses[selectedMonth].map((bjjClass) => (
-                <Link key={bjjClass.id} to={`/class/${bjjClass.id}`}>
-                  <p>{new Date(bjjClass.date).toDateString()}</p>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            Object.keys(groupedClasses).map((month) => (
-              <button key={month} onClick={() => handleMonthClick(month)}>
-                {month}
+          {Object.keys(groupedClasses).map(monthYear => (
+            <div key={monthYear}>
+              <button
+                className="btn btn-link"
+                onClick={() => toggleMonthVisibility(monthYear)}
+              >
+                {monthYear}
               </button>
-            ))
-          )}
+              {expandedMonths[monthYear] && (
+                <div>
+                  {groupedClasses[monthYear].map(bjjClass => (
+                    <Link key={bjjClass.id} to={`/class/${bjjClass.id}`}>
+                      <p>{new Date(bjjClass.date).toDateString()}</p>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
         </div>
         <div className="add-class-btn">
           <Link to="/classes/add">
