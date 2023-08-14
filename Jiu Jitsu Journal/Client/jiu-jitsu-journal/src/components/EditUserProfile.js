@@ -539,7 +539,7 @@ export const UserProfileEdit = () => {
         />
       </FormGroup>
       <FormGroup>
-        <Label for="weeklyRollGoal">Weekly Roll Goal</Label>
+        <Label for="weeklyRollGoal">Daily Roll Goal</Label>
         <Input
           type="number"
           id="weeklyRollGoal"
