@@ -93,7 +93,7 @@ export default function Register({ setIsLoggedIn }) {
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="weeklyRollGoal">Weekly Roll Goal (Max 150)</Label>
+          <Label htmlFor="weeklyRollGoal">Daily Roll Goal (Max 15)</Label>
           <Input
             id="weeklyRollGoal"
             type="number"

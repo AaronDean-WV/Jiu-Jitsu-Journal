@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getClassByUserId } from "../APIManagers/ClassManager";
 import { Link } from "react-router-dom";
+import "./ClassList.css";
 
 const ClassList = () => {
   const [classes, setClasses] = useState([]);
@@ -57,7 +58,7 @@ const ClassList = () => {
               {expandedMonths[monthYear] && (
                 <div>
                   {groupedClasses[monthYear].map(bjjClass => (
-                    <Link key={bjjClass.id} to={`/class/${bjjClass.id}`}>
+                    <Link className="button" key={bjjClass.id} to={`/class/${bjjClass.id}`}>
                       <p>{new Date(bjjClass.date).toDateString()}</p>
                     </Link>
                   ))}
