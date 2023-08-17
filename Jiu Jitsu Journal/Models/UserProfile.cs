@@ -10,6 +10,10 @@ namespace Jiu_Jitsu_Journal.Models
         public string Email { get; set; }
         public int WeeklyClassGoal { get; set; }
         public int WeeklyRollGoal { get; set; }
+   
+
+ 
+    
 
 
     }
