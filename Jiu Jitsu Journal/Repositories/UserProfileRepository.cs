@@ -18,7 +18,7 @@ namespace Jiu_Jitsu_Journal.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        INSERT INTO UserProfile (FullName, Email,  WeeklyClassGoal, WeeklyRollGoal)
+                        INSERT INTO UserProfile (FullName, Email,  WeeklyClassGoal, WeeklyRollGoal )
                         OUTPUT INSERTED.ID
                         VALUES (@FullName, @Email,  @WeeklyClassGoal, @WeeklyRollGoal)";
 
@@ -26,6 +26,7 @@ namespace Jiu_Jitsu_Journal.Repositories
                     DbUtils.AddParameter(cmd, "@Email", userProfile.Email);
                     DbUtils.AddParameter(cmd, "@WeeklyClassGoal", userProfile.WeeklyClassGoal);
                     DbUtils.AddParameter(cmd, "@WeeklyRollGoal", userProfile.WeeklyRollGoal);
+                  
              
 
                     userProfile.Id = (int)cmd.ExecuteScalar();
@@ -56,8 +57,11 @@ namespace Jiu_Jitsu_Journal.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, FullName, Email, WeeklyClassGoal, WeeklyRollGoal
-                        FROM UserProfile";
+                        SELECT up.Id, up.FullName, up.Email,         
+                        up.WeeklyClassGoal, up.WeeklyRollGoal,  
+                      
+                        FROM UserProfile up
+                       ";
 
                     using (var reader = cmd.ExecuteReader())
                     {
@@ -70,6 +74,7 @@ namespace Jiu_Jitsu_Journal.Repositories
                                 Email = DbUtils.GetString(reader, "Email"),
                                 WeeklyClassGoal = DbUtils.GetInt(reader, "WeeklyClassGoal"),
                                 WeeklyRollGoal = DbUtils.GetInt(reader, "WeeklyRollGoal"),
+                          
                                
                             };
 

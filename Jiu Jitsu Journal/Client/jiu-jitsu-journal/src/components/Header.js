@@ -10,6 +10,7 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
+import "./Header.css";
 
 export default function Header({ isLoggedIn, setIsLoggedIn }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,11 +19,12 @@ export default function Header({ isLoggedIn, setIsLoggedIn }) {
   const user = JSON.parse(localJournalUser)
 
   return (
-    <div>
-      <Navbar color="light" light expand="md">
-        <NavbarBrand tag={RRNavLink} to="/">
-          Jiu Jitsu Journal
-        </NavbarBrand>
+    <div className="header">
+      <div className="logoName">
+        Jiu Jitsu Journal</div> 
+      <Navbar color="black">
+        <NavbarBrand className="logo">
+        </NavbarBrand>    
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>

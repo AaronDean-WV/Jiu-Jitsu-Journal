@@ -15,7 +15,7 @@ namespace Jiu_Jitsu_Journal.Controllers
         public ClassController(IBjjClassRepository bjjClassRepository)
         {
             _bjjClassRepository = bjjClassRepository;
-           _userProfileRepository = _userProfileRepository;
+          
         }
 
         [HttpGet]

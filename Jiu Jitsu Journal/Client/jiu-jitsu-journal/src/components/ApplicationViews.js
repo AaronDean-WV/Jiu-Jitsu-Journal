@@ -8,9 +8,11 @@ import ReportsPage from "./Report";
 import WeeklyReport from "./WeeklyReport.Js";
 import Login from "./Login";
 import { ClassDetails } from "./ClassDetails";
+import "./AppViews.css";
+import { SplashPage } from "./SplashPage";
 
 const ApplicationViews = () => {
-  return (
+  return ( <div className="appview">
     <Routes>
       <Route path="/classlist" element={<ClassList />} />
       <Route path="/class/:id" element={<ClassDetails />} />
@@ -20,9 +22,9 @@ const ApplicationViews = () => {
       <Route path="/report" element={<MonthlyReport />} />
       <Route path="/report/weekly-report/:id" element={<WeeklyReport />} />
       <Route path="/report" element={<ReportsPage />} />
-      <Route path="/login" element={<Login />} />
       <Route path="*" element={<p>Whoops, nothing here...</p>} />
-    </Routes>
+      <Route className="SplashPage" path="/" element={<SplashPage/>} />
+    </Routes> </div>
   );
 };
 

@@ -1,0 +1,28 @@
+
+.logo {
+    color: rgb(155, 46, 46);
+    align-self: center;
+    display: flex;
+}
+.logoName {
+    align-self: center;
+    display: flex;
+    font-size: 30px;
+    font-family: 'Roboto', sans-serif;
+    margin-right: 1000px;
+    color: rgb(155, 46, 46);
+}
+.header {
+    background-color: rgb(29, 29, 29);
+    background-image: url("https://cdn.discordapp.com/attachments/976997516618924092/1141395964393951454/adean_a_logo_for_an_app_called_jiu_jitsu_journal_5fbdb9bd-66b6-4a03-be0d-62a65d1d4de0.png"); /* Use your logo image path */
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding-left: 500px; 
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+.nav-link {
+    color: rgb(155, 46, 46);
+}

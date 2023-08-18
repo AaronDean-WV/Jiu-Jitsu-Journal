@@ -1,0 +1,15 @@
+.flag{
+    background-image: url("https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXVlaXZ4cmRwaGRobG4wZnY2MTRlNHlsOXB6NWR1dHEzbnNrZTQ1eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bIqdxoOVJ2oak/giphy.gif") ;
+background-repeat: no-repeat;
+width: 1000px;
+height: 300px;
+margin-top: 400px;
+margin-left: -325px;
+}
+.container {
+    font-size: 15px;
+    font-family: 'Times New Roman', Times, serif;
+    display: flex;
+    flex-direction: row;
+
+}
